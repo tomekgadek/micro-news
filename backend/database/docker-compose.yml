@@ -1,0 +1,17 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: micro-news-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Root_Secure_MN_2026!
+      MYSQL_DATABASE: micro-news
+      MYSQL_USER: mn_backend_user
+      MYSQL_PASSWORD: mn_Backend_Password_2026#
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
