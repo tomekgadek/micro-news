@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: micro-news-backend
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/micro-news
+    username: mn_backend_user
+    password: mn_Backend_Password_2026#
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

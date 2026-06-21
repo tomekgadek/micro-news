@@ -1,6 +1,15 @@
 # Micro News - Backend (Context/Skill for AI)
 
-Ten dokument definiuje kontekst techniczny dla części serwerowej projektu `micro-news`. Asystenci AI powinni traktować te instrukcje jako bazową wiedzę o tym module.
+Ten dokument definiuje kontekst techniczny dla części serwerowej projektu `micro-news`. Asystenci AI powinni traktować te instrukcje jako bazową wiedzę o tym module oraz opierać się na nich podczas wdrażania rozwiązań w części serwerowej.
+
+## Stos technologiczny (Tech Stack)
+
+Aplikacja backendowa opiera się na poniższym stosie technologicznym:
+- **Język programowania:** Java 21
+- **Główny framework:** Spring Boot 3.3.0
+- **Zależności:** Spring Web (REST API, MVC), Spring Data JPA
+- **System budowania:** Maven
+- **Driver bazy danych:** MySQL (`mysql-connector-j`)
 
 ## Architektura & Baza Danych MySQL (Docker)
 
