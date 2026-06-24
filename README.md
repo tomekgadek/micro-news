@@ -64,17 +64,17 @@ Natywna aplikacja przeznaczona na platformę Android. Umożliwia wygodny dostęp
 ## Plan Implementacji (Status projektu: 0% - Do wdrożenia)
 
 ### 1. Baza Danych (Docker, MySQL, Flyway)
-- [TO DO] Utworzenie pliku `docker-compose.yml` uruchamiającego kontener z bazą MySQL.
-- [TO DO] Skonfigurowanie mechanizmu Flyway w aplikacji backendowej do śledzenia i aplikowania migracji.
-- [TO DO] Przygotowanie skryptów migracyjnych Flyway (SQL) tworzących struktury tabel (`user`, `login`, `article`, `section`, `art_user`, `image`, `art_img`).
-- [TO DO] Zdefiniowanie poprawnych kluczy obcych i relacji (m.in. 1:N dla sekcji z artykułami, N:M dla zdjęć, logowanie aktywności do `art_user`).
+- [DONE] Utworzenie pliku `docker-compose.yml` uruchamiającego kontener z bazą MySQL.
+- [DONE] Skonfigurowanie mechanizmu Flyway w aplikacji backendowej do śledzenia i aplikowania migracji.
+- [DONE] Przygotowanie skryptów migracyjnych Flyway (SQL) tworzących struktury tabel (`user`, `login`, `article`, `section`, `art_user`, `image`, `art_img`).
+- [DONE] Zdefiniowanie poprawnych kluczy obcych i relacji (m.in. 1:N dla sekcji z artykułami, N:M dla zdjęć, logowanie aktywności do `art_user`).
 - [TO DO] Przygotowanie skryptu z początkowymi danymi testowymi dla bazy MySQL (sekcje: Sport, Film, Nauka, testowi użytkownicy i newsy).
 
 ### 2. Backend (Java, Spring Boot API, Swagger)
-- [TO DO] Inicjalizacja projektu Spring Boot API (zależności m.in. Spring Web, Spring Data JPA, Flyway, sterownik MySQL).
-- [TO DO] Konfiguracja połączenia aplikacji z bazą MySQL uruchomioną w Dockerze.
+- [DONE] Inicjalizacja projektu Spring Boot API (zależności m.in. Spring Web, Spring Data JPA, Flyway, sterownik MySQL).
+- [DONE] Konfiguracja połączenia aplikacji z bazą MySQL uruchomioną w Dockerze.
 - [TO DO] Skonfigurowanie biblioteki Swagger (OpenAPI) w celu automatycznego wygenerowania i udostępnienia dokumentacji API.
-- [TO DO] Utworzenie encji JPA dokładnie odwzorowujących docelowy schemat bazy MySQL.
+- [DONE] Utworzenie encji JPA dokładnie odwzorowujących docelowy schemat bazy MySQL.
 - [TO DO] Implementacja mechanizmu zabezpieczeń (np. Spring Security) oraz logowania z wyraźnym podziałem na role (Admin oraz User).
 - [TO DO] Zbudowanie ogólnodostępnych endpointów REST dla aplikacji klienckich (pobieranie list artykułów dla poszczególnych sekcji oraz pełnych szczegółów ze zdjęciami).
 - [TO DO] Zbudowanie chronionych endpointów REST dla panelu CMS umożliwiających operacje CRUD na artykułach, sekcjach czy obrazkach.
