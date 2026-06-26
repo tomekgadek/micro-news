@@ -18,3 +18,8 @@ spring:
 
   flyway:
     enabled: true
+
+app:
+  media:
+    directory: ${user.home}/micro-news-static
+
