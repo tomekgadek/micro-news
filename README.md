@@ -79,7 +79,7 @@ Natywna aplikacja przeznaczona na platformę Android. Umożliwia wygodny dostęp
 - [TO DO] Zbudowanie ogólnodostępnych endpointów REST dla aplikacji klienckich (pobieranie list artykułów dla poszczególnych sekcji oraz pełnych szczegółów ze zdjęciami).
 - [TO DO] Zbudowanie chronionych endpointów REST dla panelu CMS umożliwiających operacje CRUD na artykułach, sekcjach czy obrazkach.
 - [TO DO] Implementacja mechanizmu logowania odczytu: odpowiedni endpoint, który zarejestruje w bazie wizytę zalogowanego użytkownika (User) na konkretnym artykule (`art_user`).
-- [TO DO] Zweryfikowanie wszystkich endpointów z poziomu wbudowanego interfejsu Swagger UI.
+- [DONE] Zweryfikowanie wszystkich endpointów z poziomu wbudowanego interfejsu Swagger UI.
 
 ### 3. Frontend (Angular - Aplikacja frontowa + CMS)
 - [TO DO] Inicjalizacja nowego projektu środowisku Angular.
