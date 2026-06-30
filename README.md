@@ -73,7 +73,7 @@ Natywna aplikacja przeznaczona na platformę Android. Umożliwia wygodny dostęp
 ### 2. Backend (Java, Spring Boot API, Swagger)
 - [DONE] Inicjalizacja projektu Spring Boot API (zależności m.in. Spring Web, Spring Data JPA, Flyway, sterownik MySQL).
 - [DONE] Konfiguracja połączenia aplikacji z bazą MySQL uruchomioną w Dockerze.
-- [TO DO] Skonfigurowanie biblioteki Swagger (OpenAPI) w celu automatycznego wygenerowania i udostępnienia dokumentacji API.
+- [DONE] Skonfigurowanie biblioteki Swagger (OpenAPI) w celu automatycznego wygenerowania i udostępnienia dokumentacji API.
 - [DONE] Utworzenie encji JPA dokładnie odwzorowujących docelowy schemat bazy MySQL.
 - [TO DO] Implementacja mechanizmu zabezpieczeń (np. Spring Security) oraz logowania z wyraźnym podziałem na role (Admin oraz User).
 - [TO DO] Zbudowanie ogólnodostępnych endpointów REST dla aplikacji klienckich (pobieranie list artykułów dla poszczególnych sekcji oraz pełnych szczegółów ze zdjęciami).
@@ -97,4 +97,4 @@ Natywna aplikacja przeznaczona na platformę Android. Umożliwia wygodny dostęp
 - [TO DO] Implementacja własnego widoku ekranu logowania i jego komunikacja z backendem.
 - [TO DO] Budowa aktywności / fragmentu wyświetlającego detale artykułu.
 - [TO DO] Oprogramowanie akcji otwierania newsa, aby aplikacja mobilna rejestrowała fakt odczytu po stronie API serwera.
-- [TO DO] Osadzenie widoku zdjęć (dla `image`, `image2`) oraz dodanie logiki i przycisku powrotu do strony głównej.
+- [TO DO] Osadzenie widoku zdjęć oraz dodanie logiki i przycisku powrotu do strony głównej.
