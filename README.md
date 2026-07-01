@@ -68,7 +68,7 @@ Natywna aplikacja przeznaczona na platformę Android. Umożliwia wygodny dostęp
 - [DONE] Skonfigurowanie mechanizmu Flyway w aplikacji backendowej do śledzenia i aplikowania migracji.
 - [DONE] Przygotowanie skryptów migracyjnych Flyway (SQL) tworzących struktury tabel (`user`, `login`, `article`, `section`, `art_user`, `image`, `art_img`).
 - [DONE] Zdefiniowanie poprawnych kluczy obcych i relacji (m.in. 1:N dla sekcji z artykułami, N:M dla zdjęć, logowanie aktywności do `art_user`).
-- [TO DO] Przygotowanie skryptu z początkowymi danymi testowymi dla bazy MySQL (sekcje: Sport, Film, Nauka, testowi użytkownicy i newsy).
+- [DONE] Przygotowanie skryptu z początkowymi danymi testowymi dla bazy MySQL (sekcje: Sport, Film, Nauka, testowi użytkownicy i newsy).
 
 ### 2. Backend (Java, Spring Boot API, Swagger)
 - [DONE] Inicjalizacja projektu Spring Boot API (zależności m.in. Spring Web, Spring Data JPA, Flyway, sterownik MySQL).

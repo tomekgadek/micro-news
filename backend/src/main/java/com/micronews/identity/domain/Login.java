@@ -14,5 +14,19 @@ class Login {
     @Column(name = "id_user", unique = true)
     private Integer idUser;
 
+    private String role;
+
     Login() {}
+
+    String getLogin() {
+        return login;
+    }
+
+    String getPass() {
+        return pass;
+    }
+
+    String getRole() {
+        return role;
+    }
 }
