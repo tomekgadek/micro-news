@@ -7,16 +7,23 @@ import jakarta.persistence.*;
 class Login {
     @Id
     @Column(name = "login", length = 100)
-    private String login;
+    String login;
     
-    private String pass;
+    String pass;
     
     @Column(name = "id_user", unique = true)
-    private Integer idUser;
+    Integer idUser;
 
-    private String role;
+    String role;
 
     Login() {}
+
+    Login(String login, String pass, Integer idUser, String role) {
+        this.login = login;
+        this.pass = pass;
+        this.idUser = idUser;
+        this.role = role;
+    }
 
     String getLogin() {
         return login;

@@ -7,10 +7,17 @@ import jakarta.persistence.*;
 class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String firstname;
-    private String surname;
-    private String city;
+    Integer id;
+    String firstname;
+    String surname;
+    String city;
 
     User() {}
+
+    User(Integer id, String firstname, String surname, String city) {
+        this.id = id;
+        this.firstname = firstname;
+        this.surname = surname;
+        this.city = city;
+    }
 }

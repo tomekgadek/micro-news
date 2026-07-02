@@ -4,6 +4,7 @@ import com.micronews.activity.dto.ArticleUserNotFoundException;
 import com.micronews.content.dto.ArticleNotFoundException;
 import com.micronews.content.dto.SectionNotFoundException;
 import com.micronews.identity.dto.UserNotFoundException;
+import com.micronews.identity.dto.InvalidCredentialsException;
 import com.micronews.media.dto.ImageNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,12 @@ class ExceptionHandlingAdvice {
     ResponseEntity<ErrorMessage> handleNotFound(RuntimeException e) {
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    ResponseEntity<ErrorMessage> handleUnauthorized(RuntimeException e) {
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 
     record ErrorMessage(String message, String details) {
