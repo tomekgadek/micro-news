@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import jakarta.validation.Validator;
+import jakarta.validation.Validation;
 
 @Configuration
 class IdentityConfiguration {
@@ -14,7 +16,8 @@ class IdentityConfiguration {
                 new InMemoryUserRepository(),
                 new InMemoryLoginRepository(),
                 new BCryptPasswordEncoder(),
-                new JwtService()
+                new JwtService(),
+                Validation.buildDefaultValidatorFactory().getValidator()
         );
     }
 
@@ -23,8 +26,9 @@ class IdentityConfiguration {
             UserRepository userRepository,
             LoginRepository loginRepository,
             PasswordEncoder passwordEncoder,
-            JwtService jwtService
+            JwtService jwtService,
+            Validator validator
     ) {
-        return new IdentityFacade(userRepository, loginRepository, passwordEncoder, jwtService);
+        return new IdentityFacade(userRepository, loginRepository, passwordEncoder, jwtService, validator);
     }
 }

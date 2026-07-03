@@ -5,7 +5,7 @@ import com.micronews.identity.dto.LoginResponse
 import com.micronews.identity.dto.InvalidCredentialsException
 import spock.lang.Specification
 
-class IdentitySpec extends Specification implements SampleUsers {
+class LoginSpec extends Specification implements SampleUsers {
 
     IdentityFacade facade = new IdentityConfiguration().identityFacade()
 

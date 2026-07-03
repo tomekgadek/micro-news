@@ -75,7 +75,7 @@ Natywna aplikacja przeznaczona na platformę Android. Umożliwia wygodny dostęp
 - [DONE] Konfiguracja połączenia aplikacji z bazą MySQL uruchomioną w Dockerze.
 - [DONE] Skonfigurowanie biblioteki Swagger (OpenAPI) w celu automatycznego wygenerowania i udostępnienia dokumentacji API.
 - [DONE] Utworzenie encji JPA dokładnie odwzorowujących docelowy schemat bazy MySQL.
-- [TO DO] Implementacja mechanizmu zabezpieczeń (np. Spring Security) oraz logowania z wyraźnym podziałem na role (Admin oraz User).
+- [DONE] Implementacja mechanizmu zabezpieczeń (np. Spring Security) oraz logowania z wyraźnym podziałem na role (Admin oraz User).
 - [TO DO] Zbudowanie ogólnodostępnych endpointów REST dla aplikacji klienckich (pobieranie list artykułów dla poszczególnych sekcji oraz pełnych szczegółów ze zdjęciami).
 - [TO DO] Zbudowanie chronionych endpointów REST dla panelu CMS umożliwiających operacje CRUD na artykułach, sekcjach czy obrazkach.
 - [TO DO] Implementacja mechanizmu logowania odczytu: odpowiedni endpoint, który zarejestruje w bazie wizytę zalogowanego użytkownika (User) na konkretnym artykule (`art_user`).

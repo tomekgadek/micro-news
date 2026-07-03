@@ -5,6 +5,8 @@ import com.micronews.content.dto.ArticleNotFoundException;
 import com.micronews.content.dto.SectionNotFoundException;
 import com.micronews.identity.dto.UserNotFoundException;
 import com.micronews.identity.dto.InvalidCredentialsException;
+import com.micronews.identity.dto.UserAlreadyExistsException;
+import com.micronews.identity.dto.InvalidRegistrationDataException;
 import com.micronews.media.dto.ImageNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,18 @@ class ExceptionHandlingAdvice {
     ResponseEntity<ErrorMessage> handleUnauthorized(RuntimeException e) {
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    ResponseEntity<ErrorMessage> handleConflict(RuntimeException e) {
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidRegistrationDataException.class)
+    ResponseEntity<ErrorMessage> handleBadRequest(RuntimeException e) {
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     record ErrorMessage(String message, String details) {
