@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class MediaConfiguration {
 
+    MediaFacade mediaFacade() {
+        return new MediaFacade(new InMemoryImageRepository());
+    }
+
     @Bean
     MediaFacade mediaFacade(ImageRepository imageRepository) {
         return new MediaFacade(imageRepository);

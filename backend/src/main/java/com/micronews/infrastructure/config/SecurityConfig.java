@@ -46,6 +46,7 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/identity/login",
                                 "/identity/register",
+                                "/articles/public",
                                 "/auth/**",
                                 "/static/**",
                                 "/error")

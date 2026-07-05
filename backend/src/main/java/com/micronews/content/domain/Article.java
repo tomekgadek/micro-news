@@ -1,5 +1,6 @@
 package com.micronews.content.domain;
 
+import com.micronews.content.dto.ArticleDto;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -8,18 +9,30 @@ import java.time.LocalDateTime;
 class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    Integer id;
     
-    private String title;
+    String title;
     
     @Column(columnDefinition = "TEXT")
-    private String content;
+    String content;
     
     @Column(name = "date_art")
-    private LocalDateTime dateArt;
+    LocalDateTime dateArt;
     
     @Column(name = "id_section")
-    private Integer idSection;
+    Integer idSection;
 
     Article() {}
+
+    Article(Integer id, String title, String content, LocalDateTime dateArt, Integer idSection) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.dateArt = dateArt;
+        this.idSection = idSection;
+    }
+
+    ArticleDto dto() {
+        return new ArticleDto(id, title, content, dateArt, idSection);
+    }
 }

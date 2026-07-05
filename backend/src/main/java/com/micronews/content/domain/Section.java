@@ -1,5 +1,6 @@
 package com.micronews.content.domain;
 
+import com.micronews.content.dto.SectionDto;
 import jakarta.persistence.*;
 
 @Entity
@@ -7,8 +8,17 @@ import jakarta.persistence.*;
 class Section {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String name;
+    Integer id;
+    String name;
 
     Section() {}
+
+    Section(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    SectionDto dto() {
+        return new SectionDto(id, name);
+    }
 }
