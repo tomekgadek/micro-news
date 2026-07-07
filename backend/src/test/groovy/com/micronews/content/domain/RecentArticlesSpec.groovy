@@ -1,10 +1,15 @@
 package com.micronews.content.domain
 
 import com.micronews.content.dto.PublicArticleDto
+import com.micronews.content.dto.ArticleSummaryDto
+import com.micronews.content.dto.ArticleDetailsDto
+import com.micronews.content.dto.ArticleNotFoundException
 import com.micronews.media.domain.MediaConfiguration
 import com.micronews.media.domain.MediaFacade
 import com.micronews.media.domain.Image
 import java.time.LocalDateTime
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import spock.lang.Specification
 
 class RecentArticlesSpec extends Specification {
@@ -51,6 +56,7 @@ class RecentArticlesSpec extends Specification {
         result.size() == 3
 
         and: "the articles match the expected properties at each index"
+        result[index].id() == id
         result[index].title() == title
         result[index].category() == category
         result[index].leadImage() == leadImage
@@ -58,9 +64,75 @@ class RecentArticlesSpec extends Specification {
         result[index].publicationDate() == date
 
         where:
-        index | title                | category | leadImage                      | content          | date
-        0     | "Lewandowski w MLS"  | "Sport"  | "http://image-lewandowski.jpg" | "Treść sportowa" | LocalDateTime.of(2026, 7, 5, 10, 0)
-        1     | "Premiera Lalki"     | "Film"   | "http://image-lalka.jpg"       | "Treść filmowa"  | LocalDateTime.of(2026, 7, 3, 10, 0)
-        2     | "Hadron LHC"         | "Nauka"  | null                           | "Treść naukowa"  | LocalDateTime.of(2026, 7, 2, 10, 0)
+        index | id | title                | category | leadImage                      | content          | date
+        0     | 1  | "Lewandowski w MLS"  | "Sport"  | "http://image-lewandowski.jpg" | "Treść sportowa" | LocalDateTime.of(2026, 7, 5, 10, 0)
+        1     | 3  | "Premiera Lalki"     | "Film"   | "http://image-lalka.jpg"       | "Treść filmowa"  | LocalDateTime.of(2026, 7, 3, 10, 0)
+        2     | 4  | "Hadron LHC"         | "Nauka"  | null                           | "Treść naukowa"  | LocalDateTime.of(2026, 7, 2, 10, 0)
+    }
+
+    def "should return paginated articles ordered by date descending without content"() {
+        given: "sections"
+        def sport = contentFacade.sectionRepository.save(new Section(null, "Sport"))
+
+        and: "articles"
+        def art1 = contentFacade.articleRepository.save(new Article(null, "A1", "Content 1", LocalDateTime.of(2026, 7, 1, 12, 0), sport.id))
+        def art2 = contentFacade.articleRepository.save(new Article(null, "A2", "Content 2", LocalDateTime.of(2026, 7, 3, 12, 0), sport.id))
+        def art3 = contentFacade.articleRepository.save(new Article(null, "A3", "Content 3", LocalDateTime.of(2026, 7, 2, 12, 0), sport.id))
+
+        and: "associated images"
+        mediaFacade.imageRepository.save(new Image(null, "http://image1.jpg", "A1 img", [art1.id] as Set))
+        mediaFacade.imageRepository.save(new Image(null, "http://image3.jpg", "A3 img", [art3.id] as Set))
+
+        when: "we request first page with size 2"
+        def pageRequest = PageRequest.of(0, 2, Sort.by("dateArt").descending())
+        def result = contentFacade.getArticles(pageRequest)
+
+        then: "result has correct metadata"
+        result.totalElements == 3
+        result.totalPages == 2
+        result.content.size() == 2
+
+        and: "articles are ordered by date descending (art2 then art3)"
+        result.content[0].id() == art2.id
+        result.content[0].title() == "A2"
+        result.content[0].category() == "Sport"
+        result.content[0].leadImage() == null
+        result.content[0].publicationDate() == LocalDateTime.of(2026, 7, 3, 12, 0)
+
+        result.content[1].id() == art3.id
+        result.content[1].title() == "A3"
+        result.content[1].category() == "Sport"
+        result.content[1].leadImage() == "http://image3.jpg"
+        result.content[1].publicationDate() == LocalDateTime.of(2026, 7, 2, 12, 0)
+
+        and: "the returned objects are ArticleSummaryDto and do not contain content field"
+        result.content[0] instanceof ArticleSummaryDto
+        !result.content[0].metaClass.respondsTo(result.content[0], "content")
+    }
+
+    def "should return article details"() {
+        given: "a section and article"
+        def sport = contentFacade.sectionRepository.save(new Section(null, "Sport"))
+        def art = contentFacade.articleRepository.save(new Article(null, "A1", "Content 1", LocalDateTime.of(2026, 7, 1, 12, 0), sport.id))
+        mediaFacade.imageRepository.save(new Image(null, "http://image1.jpg", "A1 img", [art.id] as Set))
+
+        when: "we request details"
+        def details = contentFacade.getArticleDetails(art.id)
+
+        then: "we get full details including content"
+        details.id() == art.id
+        details.title() == "A1"
+        details.category() == "Sport"
+        details.leadImage() == "http://image1.jpg"
+        details.content() == "Content 1"
+        details.publicationDate() == LocalDateTime.of(2026, 7, 1, 12, 0)
+    }
+
+    def "should throw ArticleNotFoundException when article does not exist"() {
+        when: "we request details for non-existent ID"
+        contentFacade.getArticleDetails(999)
+
+        then: "ArticleNotFoundException is thrown"
+        thrown(ArticleNotFoundException)
     }
 }

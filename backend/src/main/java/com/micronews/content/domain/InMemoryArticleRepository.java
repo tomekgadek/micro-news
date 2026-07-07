@@ -1,5 +1,8 @@
 package com.micronews.content.domain;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -44,5 +47,46 @@ class InMemoryArticleRepository implements ArticleRepository {
                 .skip(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .collect(Collectors.toList());
+     }
+
+    @Override
+    public Page<Article> findAll(Pageable pageable) {
+        java.util.Comparator<Article> comparator = (a1, a2) -> {
+            if (a1.dateArt == null && a2.dateArt == null) return 0;
+            if (a1.dateArt == null) return 1;
+            if (a2.dateArt == null) return -1;
+            return a2.dateArt.compareTo(a1.dateArt);
+        };
+        
+        if (pageable.getSort() != null && pageable.getSort().isSorted()) {
+            org.springframework.data.domain.Sort.Order order = pageable.getSort().getOrderFor("dateArt");
+            if (order != null) {
+                if (order.isAscending()) {
+                    comparator = (a1, a2) -> {
+                        if (a1.dateArt == null && a2.dateArt == null) return 0;
+                        if (a1.dateArt == null) return -1;
+                        if (a2.dateArt == null) return 1;
+                        return a1.dateArt.compareTo(a2.dateArt);
+                    };
+                } else {
+                    comparator = (a1, a2) -> {
+                        if (a1.dateArt == null && a2.dateArt == null) return 0;
+                        if (a1.dateArt == null) return 1;
+                        if (a2.dateArt == null) return -1;
+                        return a2.dateArt.compareTo(a1.dateArt);
+                    };
+                }
+            }
+        }
+
+        List<Article> sorted = map.values().stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), sorted.size());
+        List<Article> subList = (start > sorted.size()) ? List.of() : sorted.subList(start, end);
+
+        return new PageImpl<>(subList, pageable, sorted.size());
     }
 }

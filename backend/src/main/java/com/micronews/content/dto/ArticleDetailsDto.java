@@ -2,7 +2,7 @@ package com.micronews.content.dto;
 
 import java.time.LocalDateTime;
 
-public record PublicArticleDto(
+public record ArticleDetailsDto(
         Integer id,
         String category,
         String title,
