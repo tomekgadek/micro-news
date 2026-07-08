@@ -48,4 +48,28 @@ class LoginSpec extends Specification implements SampleUsers {
         then: "an InvalidCredentialsException is thrown"
         thrown(InvalidCredentialsException)
     }
+
+    def "should grant ADMIN role if user ID is in admin-ids config"() {
+        given: "a facade configured with admin ID 1"
+        def adminFacade = new IdentityFacade(
+                facade.userRepository,
+                facade.loginRepository,
+                facade.passwordEncoder,
+                facade.jwtService,
+                facade.validator,
+                [1]
+        )
+
+        and: "a login request for Kowalski (id 1)"
+        def request = new LoginRequest("jkowalski", "password123")
+
+        when: "we attempt to login"
+        def response = adminFacade.login(request)
+
+        then: "we get a token"
+        response != null
+
+        and: "the token contains the ADMIN role"
+        adminFacade.jwtService.extractClaim(response.token(), { claims -> claims.get("role", String.class) }) == "ADMIN"
+    }
 }

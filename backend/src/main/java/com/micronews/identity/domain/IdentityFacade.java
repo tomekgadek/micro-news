@@ -12,6 +12,7 @@ import com.micronews.infrastructure.config.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import jakarta.validation.Validator;
 import jakarta.validation.ConstraintViolation;
+import java.util.List;
 import java.util.Set;
 import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,18 +24,27 @@ public class IdentityFacade {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final Validator validator;
+    private final List<Integer> adminIds;
 
     public IdentityFacade(UserRepository userRepository, LoginRepository loginRepository, PasswordEncoder passwordEncoder, JwtService jwtService, Validator validator) {
+        this(userRepository, loginRepository, passwordEncoder, jwtService, validator, java.util.Collections.emptyList());
+    }
+
+    public IdentityFacade(UserRepository userRepository, LoginRepository loginRepository, PasswordEncoder passwordEncoder, JwtService jwtService, Validator validator, List<Integer> adminIds) {
         this.userRepository = userRepository;
         this.loginRepository = loginRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.validator = validator;
+        this.adminIds = adminIds != null ? adminIds : java.util.Collections.emptyList();
     }
 
     public Optional<UserCredentialsDto> findCredentialsByLogin(String login) {
         return loginRepository.findByLogin(login)
-                .map(l -> new UserCredentialsDto(l.getLogin(), l.getPass(), l.getRole()));
+                .map(l -> {
+                    String role = (l.idUser != null && adminIds.contains(l.idUser)) ? "ADMIN" : l.getRole();
+                    return new UserCredentialsDto(l.getLogin(), l.getPass(), role);
+                });
     }
 
     public LoginResponse login(LoginRequest loginRequest) {

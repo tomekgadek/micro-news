@@ -22,6 +22,9 @@ spring:
 app:
   media:
     directory: ${user.home}/micro-news-static
+  admin-ids:
+    - 1
+    - 2
 
 springdoc:
   swagger-ui:
