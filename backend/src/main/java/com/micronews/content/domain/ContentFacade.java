@@ -83,4 +83,10 @@ public class ContentFacade {
                 articleDto.dateArt()
         );
     }
+
+    public List<SectionDto> getSections() {
+        return sectionRepository.findAll().stream()
+                .map(Section::dto)
+                .collect(Collectors.toList());
+    }
 }

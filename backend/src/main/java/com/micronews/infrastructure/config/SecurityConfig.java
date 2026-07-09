@@ -47,6 +47,7 @@ public class SecurityConfig {
                                 "/identity/login",
                                 "/identity/register",
                                 "/articles/public",
+                                "/categories",
                                 "/auth/**",
                                 "/static/**",
                                 "/error")

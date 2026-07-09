@@ -4,6 +4,7 @@ import com.micronews.content.domain.ContentFacade;
 import com.micronews.content.dto.ArticleDetailsDto;
 import com.micronews.content.dto.ArticleSummaryDto;
 import com.micronews.content.dto.PublicArticleDto;
+import com.micronews.content.dto.SectionDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -38,5 +39,10 @@ class ContentController {
     @GetMapping("/articles/{id}")
     public ResponseEntity<ArticleDetailsDto> getArticleDetails(@PathVariable Integer id) {
         return ResponseEntity.ok(contentFacade.getArticleDetails(id));
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<SectionDto>> getCategories() {
+        return ResponseEntity.ok(contentFacade.getSections());
     }
 }

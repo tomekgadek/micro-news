@@ -1,5 +1,7 @@
 package com.micronews.content.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -22,5 +24,10 @@ class InMemorySectionRepository implements SectionRepository {
     @Override
     public Section findById(Integer id) {
         return map.get(id);
+    }
+
+    @Override
+    public List<Section> findAll() {
+        return new ArrayList<>(map.values());
     }
 }

@@ -135,4 +135,26 @@ class RecentArticlesSpec extends Specification {
         then: "ArticleNotFoundException is thrown"
         thrown(ArticleNotFoundException)
     }
+
+    def "should return empty list of sections when none exist"() {
+        when: "we request all sections"
+        def result = contentFacade.getSections()
+
+        then: "result is empty"
+        result.isEmpty()
+    }
+
+    def "should return all sections"() {
+        given: "saved sections"
+        def sport = contentFacade.sectionRepository.save(new Section(null, "Sport"))
+        def film = contentFacade.sectionRepository.save(new Section(null, "Film"))
+
+        when: "we request all sections"
+        def result = contentFacade.getSections()
+
+        then: "we receive all saved sections correctly mapped"
+        result.size() == 2
+        result.find { it.id() == sport.id }.name() == "Sport"
+        result.find { it.id() == film.id }.name() == "Film"
+    }
 }
